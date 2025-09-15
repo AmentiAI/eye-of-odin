@@ -205,14 +205,17 @@
                 const randomX = (Math.random() - 0.5) * 30; // -15 to +15
                 const randomY = (Math.random() - 0.5) * 30; // -15 to +15
                 
-                // Apply movement to pupil and iris
+                // Apply movement to pupil and iris with smooth transition
+                pupil.style.transition = 'transform 0.8s ease-out';
+                iris.style.transition = 'transform 0.8s ease-out';
+                
                 pupil.style.transform = `translate(calc(-50% + ${randomX}px), calc(-50% + ${randomY}px))`;
                 iris.style.transform = `translate(calc(-50% + ${randomX * 0.3}px), calc(-50% + ${randomY * 0.3}px))`;
             }
             
-            // Move eye every 2-4 seconds
+            // Move eye every 0.5-1.5 seconds
             function scheduleNextMove() {
-                const delay = Math.random() * 2000 + 2000; // 2-4 seconds
+                const delay = Math.random() * 1000 + 500; // 0.5-1.5 seconds
                 setTimeout(() => {
                     moveEye();
                     scheduleNextMove();
