@@ -188,5 +188,85 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Eye of Odin - Autonomous Eye Movement
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Eye of Odin is watching...');
+            
+            // Get the eye elements
+            const pupil = document.querySelector('.pupil');
+            const iris = document.querySelector('.iris');
+            const floatingEye = document.querySelector('.floating-eye');
+            
+            // Random eye movement function
+            function moveEye() {
+                // Random movement within bounds
+                const randomX = (Math.random() - 0.5) * 30; // -15 to +15
+                const randomY = (Math.random() - 0.5) * 30; // -15 to +15
+                
+                // Apply movement to pupil and iris
+                pupil.style.transform = `translate(calc(-50% + ${randomX}px), calc(-50% + ${randomY}px))`;
+                iris.style.transform = `translate(calc(-50% + ${randomX * 0.3}px), calc(-50% + ${randomY * 0.3}px))`;
+            }
+            
+            // Move eye every 2-4 seconds
+            function scheduleNextMove() {
+                const delay = Math.random() * 2000 + 2000; // 2-4 seconds
+                setTimeout(() => {
+                    moveEye();
+                    scheduleNextMove();
+                }, delay);
+            }
+            
+            // Start autonomous eye movement
+            scheduleNextMove();
+            
+            // Add click effect
+            floatingEye.addEventListener('click', () => {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.top = '50%';
+                ripple.style.left = '50%';
+                ripple.style.width = '0px';
+                ripple.style.height = '0px';
+                ripple.style.background = 'radial-gradient(circle, rgba(255, 215, 0, 0.5), transparent)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.animation = 'ripple 1s ease-out forwards';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.zIndex = '30';
+                
+                floatingEye.appendChild(ripple);
+                
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 1000);
+            });
+            
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    0% {
+                        width: 0px;
+                        height: 0px;
+                        opacity: 1;
+                    }
+                    100% {
+                        width: 200px;
+                        height: 200px;
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            console.log('Eye is now autonomous!');
+        });
+    </script>
 </body>
 </html>
