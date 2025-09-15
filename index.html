@@ -4,54 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eye of Odin - Floating in Space</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .space-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .title {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .title h1 {
+            font-size: 3rem;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .title p {
+            font-size: 1.2rem;
+            color: #ccc;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-eye {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            z-index: 5;
+        }
+
+        .eye {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #2c3e50, #34495e, #1a1a2e);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 100px rgba(255, 215, 0, 0.8),
+                inset 0 0 50px rgba(0, 0, 0, 0.4),
+                0 0 150px rgba(255, 215, 0, 0.4);
+            border: 6px solid #ffd700;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .eyeball {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 
+                inset 0 0 40px rgba(0, 0, 0, 0.1),
+                0 0 30px rgba(255, 255, 255, 0.4);
+            border: 3px solid rgba(255, 215, 0, 0.4);
+            z-index: 15;
+        }
+
+        .iris {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: #ffd700;
+            border-radius: 50%;
+            border: 4px solid #ffd700;
+            box-shadow: 
+                inset 0 0 30px rgba(0, 0, 0, 0.3),
+                0 0 40px rgba(255, 215, 0, 0.6);
+            z-index: 20;
+        }
+
+        .pupil {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: 
+                inset 0 0 15px rgba(255, 255, 255, 0.1),
+                0 0 20px rgba(0, 0, 0, 0.9);
+            z-index: 25;
+        }
+
+        .eye-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            border-radius: 50%;
+            filter: blur(3px);
+            z-index: 1;
+        }
+
+        .eye-glow2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+            border-radius: 50%;
+            filter: blur(5px);
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(-50%, -50%) translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translate(-50%, -50%) translateY(-20px) rotate(1deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) translateY(-10px) rotate(0deg);
+            }
+            75% {
+                transform: translate(-50%, -50%) translateY(-30px) rotate(-1deg);
+            }
+        }
+
+        .floating-eye {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body>
     <div class="space-container">
-        <!-- Stars Background -->
-        <div class="stars"></div>
-        <div class="stars2"></div>
-        <div class="stars3"></div>
-        
-        <!-- Floating Eye -->
-        <div class="floating-eye">
-            <div class="eye-container">
-                <div class="eye">
-                    <div class="eyeball">
-                        <div class="iris">
-                            <div class="pupil"></div>
-                            <div class="iris-pattern"></div>
-                        </div>
-                        <div class="eye-highlight"></div>
-                        <div class="eye-veins"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Eye Glow -->
-            <div class="eye-glow"></div>
-            <div class="eye-glow2"></div>
-        </div>
-        
-        <!-- Floating Particles -->
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-        
         <!-- Title -->
         <div class="title">
             <h1>The Eye of Odin</h1>
             <p>Watching over the cosmos</p>
         </div>
+        
+        <!-- Floating Eye -->
+        <div class="floating-eye">
+            <div class="eye-glow"></div>
+            <div class="eye-glow2"></div>
+            <div class="eye">
+                <div class="eyeball">
+                    <div class="iris">
+                        <div class="pupil"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
