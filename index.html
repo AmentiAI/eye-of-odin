@@ -59,93 +59,53 @@
             z-index: 5;
         }
 
-        .eye {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #2c3e50, #34495e, #1a1a2e);
-            border-radius: 50%;
-            box-shadow: 
-                0 0 100px rgba(255, 215, 0, 0.8),
-                inset 0 0 50px rgba(0, 0, 0, 0.4),
-                0 0 150px rgba(255, 215, 0, 0.4);
-            border: 6px solid #ffd700;
-            overflow: hidden;
-            z-index: 10;
-        }
+                .eye {
+                    position: relative;
+                    width: 300px;
+                    height: 300px;
+                    background: #2c3e50;
+                    border-radius: 50%;
+                    border: 3px solid #ffd700;
+                    overflow: hidden;
+                    z-index: 10;
+                }
 
-        .eyeball {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            background: #ffffff;
-            border-radius: 50%;
-            box-shadow: 
-                inset 0 0 40px rgba(0, 0, 0, 0.1),
-                0 0 30px rgba(255, 255, 255, 0.4);
-            border: 3px solid rgba(255, 215, 0, 0.4);
-            z-index: 15;
-        }
+                .eyeball {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 200px;
+                    height: 200px;
+                    background: #ffffff;
+                    border-radius: 50%;
+                    z-index: 15;
+                }
 
-        .iris {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            background: #ffd700;
-            border-radius: 50%;
-            border: 4px solid #ffd700;
-            box-shadow: 
-                inset 0 0 30px rgba(0, 0, 0, 0.3),
-                0 0 40px rgba(255, 215, 0, 0.6);
-            z-index: 20;
-        }
+                .iris {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100px;
+                    height: 100px;
+                    background: #ffd700;
+                    border-radius: 50%;
+                    z-index: 20;
+                }
 
-        .pupil {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: #000;
-            border-radius: 50%;
-            box-shadow: 
-                inset 0 0 15px rgba(255, 255, 255, 0.1),
-                0 0 20px rgba(0, 0, 0, 0.9);
-            z-index: 25;
-        }
+                .pupil {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 40px;
+                    height: 40px;
+                    background: #000;
+                    border-radius: 50%;
+                    z-index: 25;
+                }
 
-        .eye-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
-            border-radius: 50%;
-            filter: blur(3px);
-            z-index: 1;
-        }
-
-        .eye-glow2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
-            border-radius: 50%;
-            filter: blur(5px);
-            z-index: 1;
-        }
 
         @keyframes float {
             0%, 100% {
@@ -165,6 +125,55 @@
         .floating-eye {
             animation: float 6s ease-in-out infinite;
         }
+
+        .rune {
+            position: absolute;
+            font-size: 2rem;
+            color: #ffd700;
+            text-shadow: 0 0 10px #ffd700;
+            pointer-events: none;
+            z-index: 30;
+            opacity: 0.8;
+        }
+
+        @keyframes orbit {
+            0% {
+                transform: rotate(0deg) translateX(200px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(200px) rotate(-360deg);
+            }
+        }
+
+        @keyframes orbit-reverse {
+            0% {
+                transform: rotate(0deg) translateX(150px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(-360deg) translateX(150px) rotate(360deg);
+            }
+        }
+
+        @keyframes orbit-slow {
+            0% {
+                transform: rotate(0deg) translateX(250px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(250px) rotate(-360deg);
+            }
+        }
+
+        .rune.orbit-1 {
+            animation: orbit 8s linear infinite;
+        }
+
+        .rune.orbit-2 {
+            animation: orbit-reverse 6s linear infinite;
+        }
+
+        .rune.orbit-3 {
+            animation: orbit-slow 12s linear infinite;
+        }
     </style>
 </head>
 <body>
@@ -175,18 +184,27 @@
             <p>Watching over the cosmos</p>
         </div>
         
-        <!-- Floating Eye -->
-        <div class="floating-eye">
-            <div class="eye-glow"></div>
-            <div class="eye-glow2"></div>
-            <div class="eye">
-                <div class="eyeball">
-                    <div class="iris">
-                        <div class="pupil"></div>
+                <!-- Floating Eye -->
+                <div class="floating-eye">
+                    <div class="eye">
+                        <div class="eyeball">
+                            <div class="iris">
+                                <div class="pupil"></div>
+                            </div>
+                        </div>
                     </div>
+                    
+                    <!-- Orbiting Runes -->
+                    <div class="rune orbit-1">ᚠ</div>
+                    <div class="rune orbit-1">ᚢ</div>
+                    <div class="rune orbit-1">ᚦ</div>
+                    <div class="rune orbit-2">ᚨ</div>
+                    <div class="rune orbit-2">ᚱ</div>
+                    <div class="rune orbit-2">ᚲ</div>
+                    <div class="rune orbit-3">ᚷ</div>
+                    <div class="rune orbit-3">ᚹ</div>
+                    <div class="rune orbit-3">ᚺ</div>
                 </div>
-            </div>
-        </div>
     </div>
 
     <script>
