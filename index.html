@@ -23,7 +23,7 @@
             width: 100vw;
             height: 100vh;
             position: relative;
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: #000;
             min-height: 100vh;
         }
 
@@ -51,7 +51,7 @@
 
                 .floating-eye {
                     position: absolute;
-                    top: 50%;
+                    top: 60%;
                     left: 50%;
                     transform: translate(-50%, -50%);
                     width: 400px;
@@ -130,8 +130,8 @@
         .rune {
             position: absolute;
             font-size: 2rem;
-            color: #ffd700;
-            text-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700;
+            color: #00bfff;
+            text-shadow: 0 0 15px #00bfff, 0 0 30px #00bfff, 0 0 45px #00bfff;
             pointer-events: none;
             z-index: 30;
             opacity: 0.9;
@@ -151,6 +151,100 @@
 
         .rune.orbit {
             animation: orbit 10s linear infinite;
+        }
+
+        .question-container {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 40;
+        }
+
+        .question-input {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #00bfff;
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            width: 400px;
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .question-input:focus {
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.6);
+            border-color: #00ffff;
+        }
+
+        .ask-button {
+            margin-left: 10px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #00bfff, #0080ff);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .ask-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.6);
+        }
+
+        .answer-display {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 1.3rem;
+            color: #00bfff;
+            text-shadow: 0 0 20px #00bfff;
+            max-width: 600px;
+            z-index: 35;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .answer-display.show {
+            opacity: 1;
+        }
+
+        .screen-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .color-change {
+            animation: colorPulse 2s ease-in-out;
+        }
+
+        @keyframes colorPulse {
+            0% { background: #000; }
+            25% { background: #001122; }
+            50% { background: #002244; }
+            75% { background: #001122; }
+            100% { background: #000; }
+        }
+
+        .eyeball-blink {
+            animation: eyeballBlink 0.3s ease-in-out;
+        }
+
+        @keyframes eyeballBlink {
+            0%, 100% { transform: translate(-50%, -50%) scaleY(1); }
+            50% { transform: translate(-50%, -50%) scaleY(0.1); }
         }
     </style>
 </head>
@@ -184,10 +278,19 @@
                     <div class="rune orbit" style="animation-delay: 8s;">ᚺ</div>
                     <div class="rune orbit" style="animation-delay: 9s;">ᚾ</div>
                 </div>
+
+        <!-- Question System -->
+        <div class="question-container">
+            <input type="text" class="question-input" placeholder="Ask the Eye of Odin a question..." id="questionInput">
+            <button class="ask-button" id="askButton">Ask</button>
+        </div>
+
+        <!-- Answer Display -->
+        <div class="answer-display" id="answerDisplay"></div>
     </div>
 
     <script>
-        // Eye of Odin - Autonomous Eye Movement
+        // Eye of Odin - Autonomous Eye Movement & Question System
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Eye of Odin is watching...');
             
@@ -195,6 +298,29 @@
             const pupil = document.querySelector('.pupil');
             const iris = document.querySelector('.iris');
             const floatingEye = document.querySelector('.floating-eye');
+            const questionInput = document.getElementById('questionInput');
+            const askButton = document.getElementById('askButton');
+            const answerDisplay = document.getElementById('answerDisplay');
+            const spaceContainer = document.querySelector('.space-container');
+            
+            // Mystical answers from the Eye of Odin
+            const mysticalAnswers = [
+                "The runes whisper of ancient wisdom...",
+                "I see through the veil of time itself...",
+                "The cosmos holds answers beyond mortal comprehension...",
+                "Your destiny is written in the stars...",
+                "The gods watch over all who seek knowledge...",
+                "Wisdom comes to those who truly listen...",
+                "The past, present, and future are one in my sight...",
+                "Your question echoes through the nine realms...",
+                "The All-Father's wisdom flows through me...",
+                "Seek not just answers, but understanding...",
+                "The threads of fate are visible to those who dare to look...",
+                "In the silence between heartbeats, truth reveals itself...",
+                "The ancient ones speak through the cosmic winds...",
+                "Your soul's journey is written in the eternal tapestry...",
+                "The mysteries of existence unfold before my gaze..."
+            ];
             
             // Random eye movement function
             function moveEye() {
@@ -221,6 +347,27 @@
             
             // Start autonomous eye movement
             scheduleNextMove();
+            
+            // Add automatic blinking
+            function blinkEye() {
+                const eyeball = document.querySelector('.eyeball');
+                eyeball.classList.add('eyeball-blink');
+                setTimeout(() => {
+                    eyeball.classList.remove('eyeball-blink');
+                }, 300);
+            }
+            
+            // Blink every 3-8 seconds
+            function scheduleNextBlink() {
+                const delay = Math.random() * 5000 + 3000; // 3-8 seconds
+                setTimeout(() => {
+                    blinkEye();
+                    scheduleNextBlink();
+                }, delay);
+            }
+            
+            // Start automatic blinking
+            scheduleNextBlink();
             
             // Add click effect
             floatingEye.addEventListener('click', () => {
@@ -265,7 +412,63 @@
             `;
             document.head.appendChild(style);
             
-            console.log('Eye is now autonomous!');
+            // Question system functions
+            function getRandomAnswer() {
+                return mysticalAnswers[Math.floor(Math.random() * mysticalAnswers.length)];
+            }
+            
+            function triggerAnswerEffects() {
+                // Screen shake
+                spaceContainer.classList.add('screen-shake');
+                setTimeout(() => {
+                    spaceContainer.classList.remove('screen-shake');
+                }, 500);
+                
+                // Color change
+                spaceContainer.classList.add('color-change');
+                setTimeout(() => {
+                    spaceContainer.classList.remove('color-change');
+                }, 2000);
+                
+                // Eye blink
+                const eyeball = document.querySelector('.eyeball');
+                eyeball.classList.add('eyeball-blink');
+                setTimeout(() => {
+                    eyeball.classList.remove('eyeball-blink');
+                }, 300);
+            }
+            
+            function askQuestion() {
+                const question = questionInput.value.trim();
+                if (question === '') return;
+                
+                // Clear previous answer
+                answerDisplay.classList.remove('show');
+                
+                // Show loading effect
+                answerDisplay.textContent = 'The Eye gazes into the void...';
+                answerDisplay.classList.add('show');
+                
+                // Wait a moment, then show answer with effects
+                setTimeout(() => {
+                    const answer = getRandomAnswer();
+                    answerDisplay.textContent = answer;
+                    triggerAnswerEffects();
+                }, 1500);
+                
+                // Clear input
+                questionInput.value = '';
+            }
+            
+            // Event listeners
+            askButton.addEventListener('click', askQuestion);
+            questionInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    askQuestion();
+                }
+            });
+            
+            console.log('Eye is now autonomous and ready to answer questions!');
         });
     </script>
 </body>
